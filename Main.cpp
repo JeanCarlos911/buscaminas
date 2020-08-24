@@ -2,13 +2,8 @@
 
 using namespace std;
 
-void imprimirTablero(int size, int **matriz){
-    for(int i=0; i<size; i++){
-        for(int j=0; j<size; j++){
-            cout << "|" << matriz[i][j] << ends;
-        }
-        cout << "|" << endl;
-    }
+struct Tablero {
+    int matriz[][];
 }
 
 int main(){
@@ -45,6 +40,12 @@ int main(){
         }
     }
 
-    imprimirTablero(size, matriz);
+    //IMPRIMIR TABLERO
+    for(int i=0; i<size; i++){
+        for(int j=0; j<size; j++){
+            printf("%s%d", "|", matriz[i][j]);
+        }
+        cout << "|" << endl;
+    }
 
 }
