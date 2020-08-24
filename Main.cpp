@@ -38,10 +38,25 @@ int main(){
 
     //IMPRIMIR TABLERO
     for(int i=0; i<size; i++){
+        //parte superior de la linea
         for(int j=0; j<size; j++){
-            printf("%s%+2d", "|", matriz[i][j]);
+            printf("%s",(i==0)?"+---":"|---");
+        }
+        printf("%s",(i==0)?"+\n":"|\n");
+
+        //linea
+        for(int j=0; j<size; j++){
+            printf("%s%3d", "|", matriz[i][j]);
         }
         cout << "|" << endl;
+
+        //parte inferior
+        if(i==size-1){
+            for(int j=0; j<size; j++){
+                printf("%s","+---");
+            }
+            printf("%s","+\n");
+        }
     }
 
 }
