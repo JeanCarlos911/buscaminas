@@ -2,10 +2,6 @@
 
 using namespace std;
 
-struct Tablero {
-    int matriz[][];
-}
-
 int main(){
     int size;
 
@@ -30,7 +26,7 @@ int main(){
         for(int j=0; j<size; j++){
             if(minas>0){
                 int tipoCasilla = rand() % 2 - 1;
-                if(tipoCasilla == 1){
+                if(tipoCasilla == -1){
                     minas --;
                 }
                 matriz[i][j] = tipoCasilla;
@@ -43,7 +39,7 @@ int main(){
     //IMPRIMIR TABLERO
     for(int i=0; i<size; i++){
         for(int j=0; j<size; j++){
-            printf("%s%d", "|", matriz[i][j]);
+            printf("%s%+2d", "|", matriz[i][j]);
         }
         cout << "|" << endl;
     }
