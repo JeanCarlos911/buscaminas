@@ -120,7 +120,7 @@ int main(){
                     cout << "|   " << ends;
                 }else if(matriz[i][j]>=0 && matriz[i][j]<11){
                     cout << "| " << matriz[i][j] << " " << ends;
-                }else if(matriz[i][j] == 12){
+                }else if(matriz[i][j] == 12 || matriz[i][j]>50){
                     cout << "| X " << ends; //marca posible mina
                 }else if(matriz[i][j] == 11){
                     cout << "| # " << ends; //pisa mina
@@ -183,8 +183,21 @@ int main(){
         }
 
         //SI MARCA CASILLA, GUARDA SU VALOR ORIGINAL Y MUESTRA X
-    
+        if(opcionSeleccionada == 2 && casillasPorMarcarRestantes>0){
+            matriz[filaSeleccionada][columnaSeleccionada]+=100;
+            casillasPorMarcarRestantes--;
+        }
+
+        //SI MARCA Y NO HAY CASILLAS POR MARCAR DISPONIBLES
+        if(opcionSeleccionada == 2 && casillasPorMarcarRestantes <= 0){
+            cout << "No se pueden marcar mas casillas, ha llegado al limite: " <<  3 * size << endl;
+        }
+
         //SI DESMARCA RECUPERA SU VALOR ORIGINAL NO MUESTRA
+        if(opcionSeleccionada == 3 && casillasPorMarcarRestantes>0){
+            matriz[filaSeleccionada][columnaSeleccionada]-=100;
+            casillasPorMarcarRestantes++;
+        }
 
         //SI TODAS LAS CASILLAS SON MAYORES QUE CERO (si todas estan visibles o marcadas) GANA Y SALE
         estado = "ganar";
@@ -217,7 +230,7 @@ int main(){
                 cout << "|   " << ends;
             }else if(matriz[i][j]>=0 && matriz[i][j]<11){
                 cout << "| " << matriz[i][j] << " " << ends;
-            }else if(matriz[i][j] == 12){
+            }else if(matriz[i][j] == 12 || matriz[i][j]>50){
                 cout << "| X " << ends;
             }else if(matriz[i][j] == 11 || matriz[i][j] == -11){
                 cout << "| # " << ends;
