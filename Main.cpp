@@ -2,8 +2,12 @@
 
 using namespace std;
 
+int matriz[][];
+
+void modificarTablero(int filaSeleccionada, int columnaSeleccionada, int size);
+
 int main(){
-    int size = -1;
+    int sizeIn = -1;
 
     cout << "\n"
             "      ____                                  _                 \n"
@@ -13,14 +17,14 @@ int main(){
             "  /_____/\\__,_/____/\\___/\\__,_/_/ /_/ /_/_/_/ /_/\\__,_/____/  \n"
             "                                                              \n" << endl;
 
-    while(size<4){
+    while(sizeIn<4){
         cout << "- Cuanto mide cada lado de la matriz?\n  $ " << ends;
-        cin >> size;
-        if(size < 4){
+        cin >> sizeIn;
+        if(sizeIn < 4){
             cout << "El valor minimo del lado es 4, ya que si es menor, 3n es superior o igual a n*n, y no habrian casillas libres." << endl;
         }
     }
-    
+    int const size = sizeIn;
 
     int matriz[size][size];
     int minas = 3 * size;
@@ -163,50 +167,7 @@ int main(){
         //SI PISA UNA CASILLA DE CERO, MUESTRA LAS OTRAS CASILLAS
         if(matriz[filaSeleccionada][columnaSeleccionada] == -10){
             matriz[filaSeleccionada][columnaSeleccionada] = 0;
-            //busca hacia la izquierda
-            if(columnaSeleccionada>0){
-                for(int j=columnaSeleccionada-1; j>=0; j--){
-                    if(matriz[filaSeleccionada][j] == -10){
-                        matriz[filaSeleccionada][j] = 0;
-                    }else{
-                        matriz[filaSeleccionada][j] *= -1;
-                        break;
-                    }
-                }
-            }
-            //busca hacia la derecha
-            if(columnaSeleccionada<size-1){
-                for(int j=columnaSeleccionada+1; j<size; j++){
-                    if(matriz[filaSeleccionada][j] == -10){
-                        matriz[filaSeleccionada][j] = 0;
-                    }else{
-                        matriz[filaSeleccionada][j] *= -1;
-                        break;
-                    }
-                }
-            }
-            //busca hacia arriba
-            if(filaSeleccionada>0){
-                for(int i=filaSeleccionada-1; i>=0; i--){
-                    if(matriz[i][columnaSeleccionada] == -10){
-                        matriz[i][columnaSeleccionada] = 0;
-                    }else{
-                        matriz[i][columnaSeleccionada] *= -1;
-                        break;
-                    }
-                }
-            }
-            //busca hacia abajo
-            if(filaSeleccionada<size-1){
-                for(int i=filaSeleccionada+1; i<size; i++){
-                    if(matriz[i][columnaSeleccionada] == -10){
-                        matriz[i][columnaSeleccionada] = 0;
-                    }else{
-                        matriz[i][columnaSeleccionada] *= -1;
-                        break;
-                    }
-                }
-            }
+            modificarTablero(filaSeleccionada, columnaSeleccionada, size);
         }
 
         //SI PISA UNA MINA PIERDE Y SALE
@@ -280,5 +241,57 @@ int main(){
     if(estado.compare("ganar") == 0){
         cout << "Usted ha descubierto las posiciones de las minas, ha ganado."<< endl;
     }
-    
+
+}
+
+
+void modificarTablero(int filaSeleccionada, int columnaSeleccionada, int size){
+    //busca hacia la izquierda
+    if(columnaSeleccionada>0){
+        for(int j=columnaSeleccionada-1; j>=0; j--){
+            if(matriz[filaSeleccionada][j] == -10){
+                matriz[filaSeleccionada][j] = 0;
+                modificarTablero(filaSeleccionada, j, size);
+            }else{
+                matriz[filaSeleccionada][j] *= -1;
+                break;
+            }
+        }
+    }
+    //busca hacia la derecha
+    if(columnaSeleccionada<size-1){
+        for(int j=columnaSeleccionada+1; j<size; j++){
+            if(matriz[filaSeleccionada][j] == -10){
+                matriz[filaSeleccionada][j] = 0;
+                modificarTablero(filaSeleccionada, j, size);
+            }else{
+                matriz[filaSeleccionada][j] *= -1;
+                break;
+            }
+        }
+    }
+    //busca hacia arriba
+    if(filaSeleccionada>0){
+        for(int i=filaSeleccionada-1; i>=0; i--){
+            if(matriz[i][columnaSeleccionada] == -10){
+                matriz[i][columnaSeleccionada] = 0;
+                modificarTablero(i, columnaSeleccionada, size);
+            }else{
+                matriz[i][columnaSeleccionada] *= -1;
+                break;
+            }
+        }
+    }
+    //busca hacia abajo
+    if(filaSeleccionada<size-1){
+        for(int i=filaSeleccionada+1; i<size; i++){
+            if(matriz[i][columnaSeleccionada] == -10){
+                matriz[i][columnaSeleccionada] = 0;
+                modificarTablero(i, columnaSeleccionada, size);
+            }else{
+                matriz[i][columnaSeleccionada] *= -1;
+                break;
+            }
+        }
+    }
 }
